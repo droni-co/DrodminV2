@@ -25,7 +25,6 @@ class AuthController extends Controller
     $user = User::firstOrCreate([
       'email' => $user->getEmail()
     ], [
-      'id' => Str::uuid(),
       'name' => $user->getName(),
       'provider' => $provider,
       'avatar' => $user->getAvatar(),
