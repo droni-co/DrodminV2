@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Site extends Model
 {
   use HasFactory, HasUuids;
+
+  public function enrollments()
+  {
+    return $this->hasMany(Enrollment::class);
+  }
 }

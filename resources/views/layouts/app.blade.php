@@ -31,13 +31,6 @@
             src="{{ Auth::user()->avatar }}"
           ></v-img>
         </v-avatar>
-        <v-avatar
-          v-for="n in 5"
-          :key="n"
-          color="grey-lighten-1"
-          size="36"
-          class="d-block text-center mx-auto mb-3"
-        ></v-avatar>
         <form action="{{ route('logout') }}" method="POST">
           @csrf
           <v-btn
