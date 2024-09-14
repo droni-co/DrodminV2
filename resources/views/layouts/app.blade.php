@@ -23,24 +23,29 @@
       <v-navigation-drawer
         class="pt-4"
         color="grey-lighten-3"
-        model-value
         rail>
         <v-avatar
-          v-for="n in 12"
+          class="d-block text-center mx-auto mb-9">
+          <v-img
+            alt="{{ Auth::user()->name }}"
+            src="{{ Auth::user()->avatar }}"
+          ></v-img>
+        </v-avatar>
+        <v-avatar
+          v-for="n in 5"
           :key="n"
-          :color="`grey-${n === 1 ? 'darken' : 'lighten'}-1`"
-          :size="n === 1 ? 36 : 20"
-          class="d-block text-center mx-auto mb-9"
+          color="grey-lighten-1"
+          size="36"
+          class="d-block text-center mx-auto mb-3"
         ></v-avatar>
         <form action="{{ route('logout') }}" method="POST">
           @csrf
           <v-btn
-            block
+            icon="mdi-logout"
+            size="36"
             color="error"
-            dark
             type="submit"
-          >
-            Logout
+            class="d-block text-center mx-auto mb-3">
           </v-btn>
         </form>
       </v-navigation-drawer>
