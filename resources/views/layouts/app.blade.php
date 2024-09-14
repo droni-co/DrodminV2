@@ -31,10 +31,22 @@
           :size="n === 1 ? 36 : 20"
           class="d-block text-center mx-auto mb-9"
         ></v-avatar>
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <v-btn
+            block
+            color="error"
+            dark
+            type="submit"
+          >
+            Logout
+          </v-btn>
+        </form>
       </v-navigation-drawer>
 
       <v-main>
         <main>
+        {{ Auth::user()->name }}
           <hr>
           @yield('content')
         </main>
