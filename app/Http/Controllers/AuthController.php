@@ -6,6 +6,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+  public function login()
+  {
+    return view('auth.login');
+  }
   public function redirect($provider)
   {
     return Socialite::driver($provider)->redirect();
