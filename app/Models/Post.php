@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  public function site()
+  {
+    return $this->belongsTo(Site::class);
+  }
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }

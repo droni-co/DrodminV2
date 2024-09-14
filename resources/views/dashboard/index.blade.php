@@ -22,6 +22,12 @@
             append-icon="mdi-open-in-new">
             Ir al sitio
           </v-btn>
+          <v-btn
+            href="{{ route('sites.posts.index', $enrollment->site) }}"
+            color="primary"
+            append-icon="mdi-post-outline">
+            Posts
+          </v-btn>
         </v-card-actions>
       </v-card>
       @endforeach
