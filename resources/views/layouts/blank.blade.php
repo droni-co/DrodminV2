@@ -19,13 +19,11 @@
 </head>
 <body>
   <div id="app">
-    <v-app id="inspire">
-      <v-main>
-        <main>
-          @yield('content')
-        </main>
-      </v-main>
-    </v-app>
+    <main>
+      <main>
+        @yield('content')
+      </main>
+    </main>
   </div>
 </body>
 </html>

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<v-container>
-  <v-row>
-    <v-col cols="6">
+<div class="container">
+  <div class="row">
+    <div class="col col-md-6">
       @foreach ($enrollments as $enrollment)
       <v-card>
         <v-card-title>{{ $enrollment->site->name }}</v-card-title>
@@ -31,7 +31,7 @@
         </v-card-actions>
       </v-card>
       @endforeach
-    </v-col>
-  </v-row>
-</v-container>
+    </div>
+  </div>
+</div>
 @endsection
