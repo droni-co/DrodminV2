@@ -19,15 +19,10 @@
 </head>
 <body>
   <div id="app">
-  <img alt="{{ Auth::user()->name }}" src="{{ Auth::user()->avatar }}" />
-  <form action="{{ route('logout') }}" method="POST">
-          @csrf
-          <button type="submit" class="d-block text-center mx-auto mb-3">
-          </button>
-        </form>
-        <main>
-        @yield('content')
-        </main>
+    @include('layouts._header', ['site' => $site ?? null])
+    <main>
+      @yield('content')
+    </main>
   </div>
 </body>
 </html>

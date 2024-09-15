@@ -1,35 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-5">
   <div class="row">
     <div class="col col-md-6">
       @foreach ($enrollments as $enrollment)
-      <v-card>
-        <v-card-title>{{ $enrollment->site->name }}</v-card-title>
-        <v-card-subtitle>
-          Dominio: {{ $enrollment->site->domain }} |
-          Rol: {{ $enrollment->role }}
-        </v-card-subtitle>
-        <v-card-text>
+      <div class="card shadow">
+        <div class="card-header">
+          <h4 class="mb-0">
+            {{ $enrollment->site->name }}
+          </h4>
+          <small>
+            Dominio: {{ $enrollment->site->domain }} |
+            Rol: {{ $enrollment->role }}
+          </small>
+        </div>
+        <div class="card-body">
           <p>{{ $enrollment->site->description }}</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
+        </div>
+        <div class="card-footer">
+          <a
             href="//{{ $enrollment->site->domain }}"
             target="_blank"
-            color="secondary"
-            append-icon="mdi-open-in-new">
+            class="btn">
+            <i class="mdi mdi-open-in-new"></i>
             Ir al sitio
-          </v-btn>
-          <v-btn
+          </a>
+          <a
             href="{{ route('sites.posts.index', $enrollment->site) }}"
-            color="primary"
-            append-icon="mdi-post-outline">
+            class="btn">
+            <i class="mdi mdi-post-outline"></i>
             Posts
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+          </a>
+        </div>
+      </div>
       @endforeach
     </div>
   </div>

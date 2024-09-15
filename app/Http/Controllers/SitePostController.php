@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+use App\Models\Site;
 
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class SitePostController extends Controller
    */
   public function index($site, Request $request)
   {
+    $site = Site::findOrFail($site);
     $posts = Post::where('site', $site);
     if ($request->has('q')) {
       $posts->where(function($query) use ($request) {
@@ -19,7 +21,7 @@ class SitePostController extends Controller
           ->orWhere('content', 'like', '%' . $request->q . '%');
       });
     }
-    return view('site.posts.index', compact('posts'));
+    return view('sites.posts.index', compact('site', 'posts'));
   }
 
   /**
@@ -28,7 +30,7 @@ class SitePostController extends Controller
   public function create($site)
   {
     $post = new Post();
-    return view('site.posts.create', compact('post'));
+    return view('sites.posts.create', compact('post'));
   }
 
   /**
