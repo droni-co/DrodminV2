@@ -14,13 +14,15 @@ class SitePostController extends Controller
   public function index($site, Request $request)
   {
     $site = Site::findOrFail($site);
-    $posts = Post::where('site', $site);
+    $posts = Post::where('site_id', $site->id);
     if ($request->has('q')) {
       $posts->where(function($query) use ($request) {
         $query->where('name', 'like', '%' . $request->q . '%')
           ->orWhere('content', 'like', '%' . $request->q . '%');
       });
     }
+    $posts = $posts->paginate(20);
+
     return view('sites.posts.index', compact('site', 'posts'));
   }
 
@@ -29,8 +31,9 @@ class SitePostController extends Controller
    */
   public function create($site)
   {
+    $site = Site::findOrFail($site);
     $post = new Post();
-    return view('sites.posts.create', compact('post'));
+    return view('sites.posts.create', compact('site', 'post'));
   }
 
   /**

@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-5">
+  <a href="{{ route('sites.posts.create', $site) }}" class="btn btn-primary mb-3 float-end">
+    <i class="mdi mdi-plus"></i>
+    Crear Post
+  </a>
   <h1>Posts</h1>
-
-  <table>
+  <table class="table table-striped shadow">
   <thead>
     <tr>
       <th scope="col">Title</th>
@@ -24,15 +27,11 @@
         <td>{{ $post->updated_at }}</td>
       </tr>
     @endforeach
-    <tr>
-      <td>Example Title</td>
-      <td>Example Content</td>
-      <td>Example Author</td>
-      <td>Example Created At</td>
-      <td>Example Updated At</td>
-    </tr>
-
   </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    {{ $posts->links() }}
+  </div>
 </div>
 @endsection
