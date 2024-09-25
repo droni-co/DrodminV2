@@ -11,11 +11,10 @@
         </a>
       </div>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Site</th>
+          <th>Título</th>
           <th>Author</th>
           <th>Created At</th>
           <th>Updated At</th>
@@ -24,8 +23,13 @@
       <tbody>
         @foreach ($posts as $post)
         <tr>
-          <td>{{ $post->title }}</td>
-          <td>{{ $post->site->name }}</td>
+          <td>
+            <a href="#">
+              <strong>{{ $post->name }}</strong>
+            </a>
+            <small class="d-block text-muted">/{{ $post->slug }}</small>
+
+          </td>
           <td>{{ $post->user->name }}</td>
           <td>{{ $post->created_at }}</td>
           <td>{{ $post->updated_at }}</td>
@@ -33,5 +37,6 @@
         @endforeach
       </tbody>
     </table>
+    {{ $posts->links() }}
   </div>
 @endsection

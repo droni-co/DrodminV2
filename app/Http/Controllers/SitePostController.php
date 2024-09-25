@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Post;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class SitePostController extends Controller
 {
@@ -15,8 +16,7 @@ class SitePostController extends Controller
     public function index($siteId)
     {
       $site = Site::findOrFail($siteId);
-      flash('Message')->warning()->important();
-      $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc')->get();
+      $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc')->paginate(1);
       return view('sites.posts.index', compact('site', 'posts'));
     }
 
@@ -36,13 +36,24 @@ class SitePostController extends Controller
     public function store($siteId, Request $request)
     {
       $request->validate([
-        'name' => 'required|max:255',
-        'slug' => 'required|unique:posts',
+        'name' => 'required|min:5|max:255',
         'content' => 'required',
       ]);
       $slug = Str::slug($request->name, '-');
-      $site = Site::findOrFail($siteId);
+      if (Post::where('slug', $slug)->where('site_id', $siteId)->exists()) {
+        $slug = $slug . '-' . time();
+      }
+
       $post = new Post();
+      $post->site_id = $siteId;
+      $post->user_id = Auth::user()->id;
+      $post->name = $request->name;
+      $post->slug = $slug;
+      $post->content = $request->content;
+      $post->save();
+
+      flash('Post created successfully!')->success();
+      return redirect()->route('sites.posts.index', $siteId);
     }
 
     /**
