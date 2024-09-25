@@ -49,7 +49,12 @@ class SitePostController extends Controller
       $post->user_id = Auth::user()->id;
       $post->name = $request->name;
       $post->slug = $slug;
+      $post->description = $request->description;
+      $post->picture = $request->picture;
+      $post->format = $request->format;
       $post->content = $request->content;
+      $post->props = $request->props ?? '[]';
+      $post->active = $request->active ?? false;
       $post->save();
 
       flash('Post created successfully!')->success();
@@ -85,7 +90,12 @@ class SitePostController extends Controller
       ]);
       $post = Post::where('site_id', $siteId)->where('id', $id)->firstOrFail();
       $post->name = $request->name;
+      $post->description = $request->description;
+      $post->picture = $request->picture;
+      $post->format = $request->format;
       $post->content = $request->content;
+      $post->props = $request->props ?? '[]';
+      $post->active = $request->active ?? false;
       $post->save();
 
       flash('Post updated successfully!')->success();

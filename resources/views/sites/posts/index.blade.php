@@ -15,9 +15,10 @@
       <thead>
         <tr>
           <th>Título</th>
-          <th>Author</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th>Info</th>
+          <th>Formato</th>
+          <th>Imagen</th>
+          <th>TimeStamps</th>
         </tr>
       </thead>
       <tbody>
@@ -29,9 +30,25 @@
             </a>
             <small class="d-block text-muted">/{{ $post->slug }}</small>
           </td>
-          <td>{{ $post->user->name }}</td>
-          <td>{{ $post->created_at }}</td>
-          <td>{{ $post->updated_at }}</td>
+          <td>
+            <i class="mdi mdi-account"></i> {{ $post->user->name }}<br>
+            <i class="mdi mdi-folder-multiple-outline"></i>
+          </td>
+          <td>{{ $post->format }}</td>
+          <td>
+            @if($post->picture)
+            <a href="{{ $post->picture }}" class="btn btn-sm btn-outline-info" target="_blank">
+              Imagen
+              <i class="mdi mdi-open-in-new"></i>
+            </a>
+            @endif
+          </td>
+          <td class="{{ !$post->active ? 'bg-danger text-white' : '' }}">
+            <small>
+              <i class="mdi mdi-calendar"></i> {{ $post->created_at }}<br>
+              <i class="mdi mdi-update"></i> {{ $post->updated_at }}
+            </small>
+          </td>
         </tr>
         @endforeach
       </tbody>
