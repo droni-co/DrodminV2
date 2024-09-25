@@ -24,11 +24,10 @@
         @foreach ($posts as $post)
         <tr>
           <td>
-            <a href="#">
+            <a href="{{ route('sites.posts.edit', [$site, $post]) }}">
               <strong>{{ $post->name }}</strong>
             </a>
             <small class="d-block text-muted">/{{ $post->slug }}</small>
-
           </td>
           <td>{{ $post->user->name }}</td>
           <td>{{ $post->created_at }}</td>

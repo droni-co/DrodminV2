@@ -1,5 +1,5 @@
 <div class="form-floating mb-3">
-  <input type="text" class="form-control" id="name" name="name" placeholder="Título del post" required>
+  <input type="text" class="form-control" id="name" name="name" placeholder="Título del post" required value="{{ old('name', $post->name) }}">
   <label for="name">Título del post</label>
 </div>
 <div class="form-floating mb-3">
