@@ -47,7 +47,7 @@
         <li class="nav-item">
           <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="btn btn-link" type="submit">
+            <button class="btn btn-link text-white" type="submit">
               <i class="mdi mdi-logout"></i>
             </button>
           </form>

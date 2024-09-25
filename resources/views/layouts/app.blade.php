@@ -10,8 +10,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
 
     <!-- Scripts -->
@@ -19,9 +17,15 @@
 </head>
 <body>
   <div id="app">
-    @include('layouts._header', ['site' => $site ?? null])
-    @yield('content')
-    @include('layouts._footer')
+    <header>
+      @include('layouts._header', ['site' => $site ?? null])
+    </header>
+    <main>
+      @yield('content')
+    </main>
+    <footer>
+      @include('layouts._footer')
+    </footer>
   </div>
 </body>
 </html>
