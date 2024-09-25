@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Site;
+use App\Models\Post;
 
 class SitePostController extends Controller
 {
@@ -13,15 +14,18 @@ class SitePostController extends Controller
     public function index($siteId)
     {
       $site = Site::findOrFail($siteId);
-      return view('sites.posts.index', compact('site'));
+      $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc')->get();
+      return view('sites.posts.index', compact('site', 'posts'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($siteId)
     {
-        //
+      $site = Site::findOrFail($siteId);
+      $post = new Post();
+      return view('sites.posts.create', compact('site', 'post'));
     }
 
     /**
