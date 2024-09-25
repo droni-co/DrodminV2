@@ -20,7 +20,8 @@ class AuthController extends Controller
 
   public function callback($provider)
   {
-    $user = Socialite::driver($provider)->user();
+    $driver = Socialite::driver($provider);
+    $user = $driver->user();
 
     $user = User::firstOrCreate([
       'email' => $user->getEmail()
