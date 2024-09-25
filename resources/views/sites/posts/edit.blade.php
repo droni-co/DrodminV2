@@ -5,7 +5,13 @@
   <form action="{{ route('sites.posts.update', [$site, $post]) }}" method="POST" class="row">
     @csrf
     @method('PUT')
-    <textarea name="content" id="content" class="col-md-7 col-lg-8 bg-dark border-0 text-white">{{ old('content', $post->content) }}</textarea>
+    <monaco-editor
+      style="min-height: 87vh"
+      class="col-md-7 col-lg-8 bg-dark"
+      value="{{ old('content', $post->content) }}"
+      format="{{ old('format', $post->format) }}"
+      name="content">
+    </monaco-editor>
     <div class="col-md-5 col-lg-4 py-3">
       @include('sites.posts._form', $post)
 

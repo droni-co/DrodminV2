@@ -16,12 +16,12 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-  <div id="app">
+  <div id="app" class="d-flex flex-column" style="min-height: 100vh;">
     <header>
       @include('layouts._header', ['site' => $site ?? null])
     </header>
     @include('layouts._alerts')
-    <main>
+    <main class="flex-grow-1">
       @yield('content')
     </main>
     <footer>
