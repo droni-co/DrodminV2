@@ -19,38 +19,8 @@
 </head>
 <body>
   <div id="app">
-    <v-app id="inspire">
-      <v-navigation-drawer
-        class="pt-4"
-        color="grey-lighten-3"
-        rail>
-        <v-avatar
-          class="d-block text-center mx-auto mb-9">
-          <v-img
-            alt="{{ Auth::user()->name }}"
-            src="{{ Auth::user()->avatar }}"
-          ></v-img>
-        </v-avatar>
-        <form action="{{ route('logout') }}" method="POST">
-          @csrf
-          <v-btn
-            icon="mdi-logout"
-            size="36"
-            color="error"
-            type="submit"
-            class="d-block text-center mx-auto mb-3">
-          </v-btn>
-        </form>
-      </v-navigation-drawer>
-
-      <v-main>
-        <main>
-        {{ Auth::user()->name }}
-          <hr>
-          @yield('content')
-        </main>
-      </v-main>
-    </v-app>
+    @include('layouts._header')
+    @yield('content')
   </div>
 </body>
 </html>

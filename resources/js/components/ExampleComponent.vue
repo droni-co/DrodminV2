@@ -1,29 +1,23 @@
 <template>
-  <div>
-    <h1>Monaco Editor en Vite</h1>
-    <div ref="editorContainer" style="width: 100%; height: 500px;"></div>
-  </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Example Component</div>
+
+                    <div class="card-body">
+                        I'm an example component.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import * as monaco from 'monaco-editor';
-
-const editorContainer = ref();
-
-onMounted(() => {
-  const editorInstance = monaco.editor.create(editorContainer.value, {
-    value: `function helloWorld() {\n  console.log("Hello, world!");\n}`,
-    language: 'markdown',
-    theme: 'vs-dark',
-  });
-  editorInstance.onDidChangeModelContent(() => {
-    console.log(editorInstance.getValue());
-  });
-});
-
+<script>
+    export default {
+        mounted() {
+            console.log('Component mounted.')
+        }
+    }
 </script>
-
-<style scoped>
-/* Puedes añadir estilos específicos si es necesario */
-</style>

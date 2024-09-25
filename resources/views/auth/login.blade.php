@@ -1,27 +1,18 @@
 @extends('layouts.blank')
 
 @section('content')
-<v-container>
-  <v-row justify="center">
-    <v-col cols="4">
-      <v-img src="/img/brand.png" class="my-4"></v-img>
-      <v-card>
-        <v-card-title>Bienvenido a Drodmin</v-card-title>
-        <v-card-text>
-          <p>Drodmin es una plataforma open source para administrar proyectos de software basados en Apis de manera eficiente.</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            href="{{ route('auth.redirect', 'google') }}"
-            color="primary"
-            append-icon="mdi-google">
-            Iniciar sesión con Google
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
-</v-container>
-
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h5>Bienvenido a Drodmin</h5>
+          <p>
+            Drodmin es una aplicación web que te permite gestionar sitios web y sus contenidos de manera sencilla.
+          </p>
+          <a href="{{ route('auth.redirect', 'google') }}" class="btn btn-primary">Login</a>
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
-
