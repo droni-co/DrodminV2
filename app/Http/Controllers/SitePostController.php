@@ -105,8 +105,18 @@ class SitePostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $siteId, string $id, Request $request)
     {
-        //
+      $post = Post::where('site_id', $siteId)->where('id', $id)->firstOrFail();
+      $request->validate([
+        'validator' => 'required|in:' . $post->slug,
+      ]);
+
+      $post->delete();
+
+      flash('Post deleted successfully!')->success();
+      return redirect()->route('sites.posts.index', $siteId);
+      
+
     }
 }
