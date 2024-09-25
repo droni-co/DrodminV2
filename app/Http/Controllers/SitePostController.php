@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class SitePostController extends Controller
 {
@@ -14,6 +15,7 @@ class SitePostController extends Controller
     public function index($siteId)
     {
       $site = Site::findOrFail($siteId);
+      flash('Message')->warning()->important();
       $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc')->get();
       return view('sites.posts.index', compact('site', 'posts'));
     }
@@ -31,9 +33,16 @@ class SitePostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($siteId, Request $request)
     {
-        //
+      $request->validate([
+        'name' => 'required|max:255',
+        'slug' => 'required|unique:posts',
+        'content' => 'required',
+      ]);
+      $slug = Str::slug($request->name, '-');
+      $site = Site::findOrFail($siteId);
+      $post = new Post();
     }
 
     /**

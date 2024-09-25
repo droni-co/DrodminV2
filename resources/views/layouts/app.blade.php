@@ -20,6 +20,7 @@
     <header>
       @include('layouts._header', ['site' => $site ?? null])
     </header>
+    @include('layouts._alerts')
     <main>
       @yield('content')
     </main>
