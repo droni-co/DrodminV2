@@ -19,7 +19,7 @@
 </head>
 <body>
   <div id="app">
-    @include('layouts._header')
+    @include('layouts._header', ['site' => $site ?? null])
     @yield('content')
     @include('layouts._footer')
   </div>

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Site;
 
 class SitePostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($siteId)
     {
-        //
+      $site = Site::findOrFail($siteId);
+      return view('sites.posts.index', compact('site'));
     }
 
     /**
