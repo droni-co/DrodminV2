@@ -32,7 +32,7 @@
           </td>
           <td>
             <i class="mdi mdi-account"></i> {{ $post->user->name }}<br>
-            <i class="mdi mdi-folder-multiple-outline"></i>
+            <i class="mdi mdi-folder-multiple-outline"></i> {{ $post->categories->count() }}<br>
           </td>
           <td>{{ $post->format }}</td>
           <td>
