@@ -15,7 +15,7 @@ class SiteCategoryController extends Controller
     public function index($siteId)
     {
       $site = Site::findOrFail($siteId);
-      $categories = Category::where('site_id', $siteId)->orderBy('updated_at', 'desc')->paginate(10);
+      $categories = Category::where('site_id', $siteId)->orderBy('updated_at', 'desc')->paginate(20);
       return view('sites.categories.index', compact('site', 'categories'));
     }
 
