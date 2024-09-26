@@ -17,6 +17,7 @@
           <th>Categoría</th>
           <th>Descripción</th>
           <th>Imagen</th>
+          <th>Posts</th>
           <th>TimeStamps</th>
         </tr>
       </thead>
@@ -38,8 +39,12 @@
             @endif
           </td>
           <td>
-            <p>{{ $category->created_at }}</p>
-            <p>{{ $category->updated_at }}</p>
+            {{ $category->posts->count() }}
+          <td>
+            <small>
+              <i class="mdi mdi-calendar"></i> {{ $category->created_at }}<br>
+              <i class="mdi mdi-update"></i> {{ $category->updated_at }}
+            </small>
           </td>
         </tr>
         @endforeach

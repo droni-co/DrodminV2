@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,8 @@ class SitePostController extends Controller
     {
       $site = Site::findOrFail($siteId);
       $post = new Post();
-      return view('sites.posts.create', compact('site', 'post'));
+      $categories = Category::where('site_id', $siteId)->orderBy('name')->get();
+      return view('sites.posts.create', compact('site', 'post', 'categories'));
     }
 
     /**
@@ -38,6 +40,7 @@ class SitePostController extends Controller
       $request->validate([
         'name' => 'required|min:5|max:255',
         'content' => 'required',
+        'categories' => 'array',
       ]);
       $slug = Str::slug($request->name, '-');
       if (Post::where('slug', $slug)->where('site_id', $siteId)->exists()) {
@@ -56,6 +59,8 @@ class SitePostController extends Controller
       $post->props = $request->props ?? '[]';
       $post->active = $request->active ?? false;
       $post->save();
+
+      $post->categories()->attach($request->categories);
 
       flash('Post created successfully!')->success();
       return redirect()->route('sites.posts.index', $siteId);
@@ -76,7 +81,8 @@ class SitePostController extends Controller
     {
       $site = Site::findOrFail($siteId);
       $post = Post::where('site_id', $siteId)->where('id', $id)->firstOrFail();
-      return view('sites.posts.edit', compact('site', 'post'));
+      $categories = Category::where('site_id', $siteId)->orderBy('name')->get();
+      return view('sites.posts.edit', compact('site', 'post', 'categories'));
     }
 
     /**
@@ -87,6 +93,7 @@ class SitePostController extends Controller
       $request->validate([
         'name' => 'required|min:5|max:255',
         'content' => 'required',
+        'categories' => 'array',
       ]);
       $post = Post::where('site_id', $siteId)->where('id', $id)->firstOrFail();
       $post->name = $request->name;
@@ -97,6 +104,8 @@ class SitePostController extends Controller
       $post->props = $request->props ?? '[]';
       $post->active = $request->active ?? false;
       $post->save();
+
+      $post->categories()->sync($request->categories);
 
       flash('Post updated successfully!')->success();
       return redirect()->route('sites.posts.index', $siteId);

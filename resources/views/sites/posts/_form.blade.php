@@ -10,6 +10,26 @@
   <label for="picture">Imagen</label>
   <attachment-input site-id="{{ $site->id }}" name="picture" accept="" value="{{ old('picture', $post->picture) }}"></attachment-input>
 </div>
+<div class="mb-3">
+  <h5>Categorías</h5>
+  <ul class="list-group">
+    @foreach ($categories as $category)
+    <li class="list-group-item">
+      <input
+        class="form-check-input me-1"
+        type="checkbox"
+        id="category-{{ $category->id }}"
+        name="categories[]"
+        value="{{ $category->id }}"
+        {{ in_array($category->id, old('categories', $post->categories->pluck('id')->toArray())) ? 'checked' : '' }}>
+      <label class="form-check-label" for="category-{{ $category->id }}">
+        {{ $category->name }}
+        <small class="text-muted">/{{ $category->slug }}</small>
+      </label>
+    </li>
+    @endforeach
+  </ul>
+</div>
 <div class="form-floating mb-3">
   <select class="form-select" id="format" name="format">
     <option value="html" {{ old('format', $post->format) == 'html' ? 'selected' : '' }}>HTML</option>

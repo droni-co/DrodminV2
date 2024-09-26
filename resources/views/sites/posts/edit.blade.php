@@ -13,7 +13,7 @@
       name="content">
     </monaco-editor>
     <div class="col-md-5 col-lg-4 py-3">
-      @include('sites.posts._form', $post)
+      @include('sites.posts._form', [$post, $categories])
 
       <div class="input-group mb-3">
         <input type="text" form="delete" class="form-control is-invalid" name="validator" placeholder="Escribe '{{ $post->slug }}' para borrar">
