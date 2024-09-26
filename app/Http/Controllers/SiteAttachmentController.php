@@ -21,6 +21,10 @@ class SiteAttachmentController extends Controller
       $attachments = $attachments->where('name', 'like', '%'.$request->search.'%');
     }
     $attachments = $attachments->orderBy('created_at', 'desc')->paginate(24);
+
+    if($request->ajax()) {
+      return response()->json($attachments);
+    }
     return view('sites.attachments.index', compact('site', 'attachments'));
   }
 
@@ -41,6 +45,10 @@ class SiteAttachmentController extends Controller
     $attachment->extension = $request->file('file')->extension();
     $attachment->mime_type = $request->file('file')->getMimeType();
     $attachment->save();
+
+    if($request->ajax()) {
+      return response()->json($attachment);
+    }
 
     flash('Attachment uploaded successfully.')->success();
     return redirect()->route('sites.attachments.index', $siteId);

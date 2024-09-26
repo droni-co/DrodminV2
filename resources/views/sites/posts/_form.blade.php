@@ -6,9 +6,9 @@
   <textarea class="form-control" placeholder="Descripción" id="description" name="description" style="height: 100px;">{{ old('description', $post->description) }}</textarea>
   <label for="floatingTextarea">Descripción</label>
 </div>
-<div class="form-floating mb-3">
-  <input type="text" class="form-control" id="picture" name="picture" placeholder="Imagen" value="{{ old('picture', $post->picture) }}">
-  <label for="name">Imagen</label>
+<div class="mb-3">
+  <label for="picture">Imagen</label>
+  <attachment-input site-id="{{ $site->id }}" name="picture" accept="" value="{{ old('picture', $post->picture) }}"></attachment-input>
 </div>
 <div class="form-floating mb-3">
   <select class="form-select" id="format" name="format">
