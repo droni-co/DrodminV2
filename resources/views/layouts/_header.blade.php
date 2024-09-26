@@ -35,6 +35,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Categorias</a></li>
             <li><a class="dropdown-item" href="{{ route('sites.posts.index', $site)}}">Posts</a></li>
+            <li><a class="dropdown-item" href="{{ route('sites.attachments.index', $site)}}">Multimedia</a></li>
           </ul>
         </li>
         @endif
