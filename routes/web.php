@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SitePostController;
 use App\Http\Controllers\SiteAttachmentController;
+use App\Http\Controllers\SiteCategoryController;
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -21,4 +22,5 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(SiteAdmin::class)->group(function () {
   Route::resource('sites.posts', SitePostController::class);
   Route::resource('sites.attachments', SiteAttachmentController::class)->only(['index', 'store', 'destroy']);
+  Route::resource('sites.categories', SiteCategoryController::class);
 });
