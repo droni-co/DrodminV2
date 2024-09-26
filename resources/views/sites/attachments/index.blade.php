@@ -17,9 +17,16 @@
     </div>
     <div class="row">
       @foreach ($attachments as $attachment)
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="card">
-            {{ $attachment->toJson() }}
+            <img src="{{ Storage::disk('digitalocean')->url($attachment->path) }}" class="card-img-top" alt="{{ $attachment->name }}">
+            <form action="{{ route('sites.attachments.destroy', [$site, $attachment]) }}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger">
+                <i class="mdi mdi-delete"></i>
+              </button>
+            </form>
           </div>
         </div>
       @endforeach

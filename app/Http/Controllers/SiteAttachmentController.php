@@ -7,6 +7,7 @@ use App\Models\Attachment;
 use App\Models\Site;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SiteAttachmentController extends Controller
 {
@@ -26,13 +27,13 @@ class SiteAttachmentController extends Controller
     public function store($siteId, Request $request)
     {
       $request->validate([
-        'file' => 'required|file|max:1024',
+        'file' => 'required|file|max:1024|mimes:gif,png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx',
       ]);
       $attachment = new Attachment();
       $attachment->user_id = Auth::user()->id;
       $attachment->site_id = $siteId;
       $attachment->name = $request->file('file')->getClientOriginalName();
-      $attachment->path = $request->file('file')->store('attachments');
+      $attachment->path = Storage::disk('digitalocean')->putFile($siteId.'/'.Auth::user()->id, request()->file, 'public');
       $attachment->size = $request->file('file')->getSize();
       $attachment->extension = $request->file('file')->extension();
       $attachment->mime_type = $request->file('file')->getMimeType();
@@ -45,8 +46,13 @@ class SiteAttachmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($siteId, string $id)
     {
-        //
+      $attachment = Attachment::where('site_id', $siteId)->findOrFail($id);
+      Storage::disk('digitalocean')->delete($attachment->path);
+      $attachment->delete();
+
+      flash('Attachment deleted successfully.')->success();
+      return redirect()->route('sites.attachments.index', $siteId);
     }
 }
