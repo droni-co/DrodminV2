@@ -20,8 +20,9 @@ class AuthController extends Controller
 
   public function callback($provider)
   {
+    /** @var \Laravel\Socialite\Two\GoogleProvider  */
     $driver = Socialite::driver($provider);
-    $user = $driver->user();
+    $user = $driver->stateless()->user();
 
     $user = User::firstOrCreate([
       'email' => $user->getEmail()

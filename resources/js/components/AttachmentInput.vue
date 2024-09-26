@@ -83,11 +83,19 @@ const refModal = useTemplateRef('attachmentList')
 const localValue = ref(props.value);
 const page = ref(1);
 const search = ref('');
-const attachments = ref([]);
+
+interface Attachment {
+  id: number;
+  url: string;
+  name: string;
+  mime_type: string;
+}
+
+const attachments = ref<{ data: Attachment[] }>({ data: [] });
 
 
 const exploreFiles = () => {
-  const modal = new Modal(refModal.value, {
+  const modal = new Modal(refModal.value as HTMLElement, {
     keyboard: false,
     backdrop: 'static'
   });
@@ -107,8 +115,10 @@ const loadFiles = () => {
 
 const selectAttachment = (attachment) => {
   localValue.value = attachment.url;
-  const modal = Modal.getInstance(refModal.value);
-  modal.hide();
+  const modal = Modal.getInstance(refModal.value as HTMLElement);
+  if (modal !== null) {
+    modal.hide();
+  } 
 };
 
 const uploadFile = (event) => {
