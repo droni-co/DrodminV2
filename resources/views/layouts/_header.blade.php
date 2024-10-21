@@ -36,6 +36,7 @@
             <li><a class="dropdown-item" href="{{ route('sites.categories.index', $site)}}">Categorías</a></li>
             <li><a class="dropdown-item" href="{{ route('sites.posts.index', $site)}}">Posts</a></li>
             <li><a class="dropdown-item" href="{{ route('sites.attachments.index', $site)}}">Multimedia</a></li>
+            <li><a class="dropdown-item" href="{{ route('sites.comments.index', $site)}}">Comentarios</a></li>
           </ul>
         </li>
         @endif
