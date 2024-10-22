@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Enrollment;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,8 @@ class AuthController extends Controller
   {
     $request->validate([
       'provider' => 'required',
-      'token' => 'required'
+      'token' => 'required',
+      'siteId' => 'required|exists:sites,id'
     ]);
     /** @disregard */
     $socialiteUser = Socialite::driver($request->provider)->userFromToken($request->token);
@@ -33,11 +35,18 @@ class AuthController extends Controller
       'avatar' => $socialiteUser->getAvatar(),
       'password' => bcrypt(Str::random(24))
     ]);
+
+    $enrollment = Enrollment::firstOrCreate([
+      'user_id' => $user->id,
+      'site_id' => $request->siteId
+    ]);
     
     $token = $user->createToken('auth_token')->plainTextToken;
 
     return response()->json([
-      'token' => $token
+      'token' => $token,
+      'user' => $user,
+      'enrollment' => $enrollment
     ]);
   }
   public function me() {
