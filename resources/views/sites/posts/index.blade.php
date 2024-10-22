@@ -4,11 +4,16 @@
   <div class="container">
     <div class="border-bottom py-3 d-flex">
       <h1>Posts</h1>
-      <div class="flex-grow-1 text-end pt-1">
-        <a href="{{ route('sites.posts.create', $site) }}" class="btn btn-outline-primary">
-          <i class="mdi mdi-plus"></i>
-          Crear nuevo
-        </a>
+      <div class="flex-grow-1 text-end pt-1 d-flex justify-content-end">
+        <form action="" method="GET" class="px-3">
+          <input type="search" name="search" class="form-control rounded-pill" placeholder="Buscar...">
+        </form>
+        <div>
+          <a href="{{ route('sites.posts.create', $site) }}" class="btn btn-outline-primary">
+            <i class="mdi mdi-plus"></i>
+            Crear nuevo
+          </a>
+        </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
