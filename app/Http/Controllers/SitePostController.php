@@ -18,11 +18,9 @@ class SitePostController extends Controller
     {
       $site = Site::findOrFail($siteId);
       $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc');
-
       if ($request->has('search')) {
         $posts->where('name', 'like', '%' . $request->search . '%');
       }
-      
       $posts = $posts->paginate(10);
       return view('sites.posts.index', compact('site', 'posts'));
     }
