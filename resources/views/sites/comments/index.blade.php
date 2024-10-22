@@ -17,7 +17,7 @@
         @foreach ($comments as $comment)
         <tr>
           <td>
-            <a href="{{ route('sites.posts.edit', [$site, $comment]) }}">
+            <a href="{{ route('sites.posts.edit', [$site, $comment->post_id]) }}">
               Post: <strong>{{ $comment->post->name }}</strong>
             </a><br>
             Usuario: <strong>{{ $comment->user->name }}</strong>
