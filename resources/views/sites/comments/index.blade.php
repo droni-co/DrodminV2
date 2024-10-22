@@ -29,6 +29,12 @@
             </form>
           </td>
           <td>
+            @if($comment->parent)
+            <div class="text-secondary">
+              <strong>Respuesta a:</strong>
+              <pre>{{ $comment->parent->content }}</pre>
+            </div>
+            @endif
             <pre>{{ $comment->content }}</pre>
             @if(!$comment->approved_at)
             <form action="{{ route('sites.comments.update', [$site, $comment]) }}" method="POST">
