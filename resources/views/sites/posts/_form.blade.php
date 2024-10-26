@@ -1,5 +1,5 @@
-<ul class="nav nav-tabs" id="myTab">
-  <li class="nav-item active">
+<ul class="nav nav-tabs" id="postTab" role="tablist">
+  <li class="nav-item active" role="presentation">
     <button
       class="nav-link"
       id="postInfo-tab"
@@ -12,7 +12,7 @@
       Información
     </button>
   </li>
-  <li class="nav-item">
+  <li class="nav-item" role="presentation">
     <button
       class="nav-link"
       id="postCategories-tab"
@@ -25,7 +25,7 @@
       Categorías
     </button>
   </li>
-  <li class="nav-item">
+  <li class="nav-item" role="presentation">
     <button
       class="nav-link"
       id="postProps-tab"
@@ -39,7 +39,7 @@
     </button>
   </li>
 </ul>
-<div class="tab-content" id="myTabContent">
+<div class="tab-content" id="postTabContent">
   <div class="tab-pane fade show active" id="postInfo" role="tabpanel" aria-labelledby="postInfo-tab">
     <!-- Tab de información -->
     <div class="form-floating mb-3 mt-2">
