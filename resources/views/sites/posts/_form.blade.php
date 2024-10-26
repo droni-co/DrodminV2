@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs" id="myTab">
-  <li class="nav-item">
+  <li class="nav-item active">
     <button
-      class="nav-link active"
+      class="nav-link"
       id="postInfo-tab"
       data-bs-toggle="tab"
       data-bs-target="#postInfo"
@@ -88,7 +88,9 @@
     </div>
   </div>
   <div class="tab-pane fade" id="postProps" role="tabpanel" aria-labelledby="postProps-tab">
-    Propiedades
+    <props-component :props="{{ $post->props ?? [] }}" :datalist="{{ json_encode($propsDataList) ?? [] }}">
+
+    </props-component>
   </div>
     
 </div>

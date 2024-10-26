@@ -17,8 +17,10 @@ const app = createApp({});
 
 import MonacoEditor from './components/MonacoEditor.vue';
 import AttachmentInput from './components/AttachmentInput.vue';
+import PropsComponent from './components/PropsComponent.vue';
 app.component('monaco-editor', MonacoEditor);
 app.component('attachment-input', AttachmentInput);
+app.component('props-component', PropsComponent);
 
 
 app.mount('#app');
