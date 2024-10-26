@@ -33,7 +33,8 @@ class SitePostController extends Controller
     $site = Site::findOrFail($siteId);
     $post = new Post();
     $categories = Category::where('site_id', $siteId)->orderBy('name')->get();
-    return view('sites.posts.create', compact('site', 'post', 'categories'));
+    $propsDataList = self::getPropsName($siteId);
+    return view('sites.posts.create', compact('site', 'post', 'categories', 'propsDataList'));
   }
 
   /**

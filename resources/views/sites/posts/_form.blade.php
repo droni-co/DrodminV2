@@ -1,7 +1,7 @@
-<ul class="nav nav-tabs" id="postTab" role="tablist">
-  <li class="nav-item active" role="presentation">
+<ul class="nav nav-tabs" id="postTab">
+  <li class="nav-item">
     <button
-      class="nav-link"
+      class="nav-link active"
       id="postInfo-tab"
       data-bs-toggle="tab"
       data-bs-target="#postInfo"
@@ -12,7 +12,7 @@
       Información
     </button>
   </li>
-  <li class="nav-item" role="presentation">
+  <li class="nav-item">
     <button
       class="nav-link"
       id="postCategories-tab"
@@ -25,7 +25,7 @@
       Categorías
     </button>
   </li>
-  <li class="nav-item" role="presentation">
+  <li class="nav-item">
     <button
       class="nav-link"
       id="postProps-tab"
@@ -88,9 +88,7 @@
     </div>
   </div>
   <div class="tab-pane fade" id="postProps" role="tabpanel" aria-labelledby="postProps-tab">
-    <props-component :props="{{ $post->props ?? [] }}" :datalist="{{ json_encode($propsDataList) ?? [] }}">
-
-    </props-component>
+    <props-component :props="{{ $post->props ?? "[]" }}" :datalist="{{ json_encode($propsDataList) }}"></props-component>
   </div>
     
 </div>

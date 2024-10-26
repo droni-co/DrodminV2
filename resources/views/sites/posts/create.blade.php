@@ -12,7 +12,7 @@
       name="content">
     </monaco-editor>
     <div class="col-md-5 col-lg-4 py-3">
-      @include('sites.posts._form', [$post, $categories])
+      @include('sites.posts._form', [$post, $categories, $propsDataList])
     </div>
   </form>
 </div>
