@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Site;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Comment;
 
 class SiteController extends Controller
 {
@@ -19,7 +20,12 @@ class SiteController extends Controller
   public function show($siteId)
   {
     $site = Site::findOrFail($siteId);
-    return view('sites.show', compact('site'));
+    $lastPosts = Post::where('site_id', $siteId)->orderBy('created_at', 'desc')->limit(5)->get();
+    $lastComments = Comment::whereHas('post', function($query) use ($siteId) {
+      $query->where('site_id', $siteId);
+    })->orderBy('updated_at', 'desc')->limit(10)->get();
+    
+    return view('sites.show', compact('site', 'lastPosts', 'lastComments'));
   }
   public function search(Request $request, $siteId)
   {
