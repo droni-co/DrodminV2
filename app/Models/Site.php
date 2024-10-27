@@ -14,4 +14,8 @@ class Site extends Model
   {
     return $this->hasMany(Enrollment::class);
   }
+  public function posts()
+  {
+    return $this->hasMany(Post::class);
+  }
 }

@@ -40,9 +40,14 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" role="search" action="{{ route('sites.search', $site) }}" method="GET">
+        <input
+          class="form-control me-2 rounded-pill"
+          type="search"
+          placeholder="Search"
+          name="q"
+          aria-label="Search"
+          value="{{ request('q') }}">
       </form>
       @endif
       <ul class="navbar-nav mb-2 mb-lg-0">

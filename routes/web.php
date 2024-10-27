@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Admin sites
 Route::middleware(SiteAdmin::class)->group(function () {
+  Route::get('/sites/{site}/search', [SiteController::class, 'search'])->name('sites.search');
   Route::resource('sites', SiteController::class)->only(['show']);
   Route::resource('sites.posts', SitePostController::class);
   Route::resource('sites.attachments', SiteAttachmentController::class)->only(['index', 'store', 'destroy']);
