@@ -66,4 +66,35 @@ class SiteAttachmentController extends Controller
     flash('Attachment deleted successfully.')->success();
     return redirect()->route('sites.attachments.index', $siteId);
   }
+
+  public function import($siteId, Request $request)
+  {
+    $request->validate([
+      'file' => 'required|file|max:1024|mimes:csv,txt',
+    ]);
+    $file = $request->file('file');
+    $fileContent = fopen($file->getRealPath(), 'r');
+
+    $header = fgetcsv($fileContent, null, ';');
+    $rows = [];
+    while($row = fgetcsv($fileContent, null, ';')) {
+      $rows[] = array_combine($header, $row);
+    }
+
+    foreach($rows as $row) {
+      $tmp = explode('.', $row['name']);
+      $attachment = new Attachment();
+      $attachment->user_id = Auth::user()->id;
+      $attachment->site_id = $siteId;
+      $attachment->name = $row['name'];
+      $attachment->path = $row['path'];
+      $attachment->size = $row['size'];
+      $attachment->extension = end($tmp);
+      $attachment->mime_type = $row['mime'];
+      $attachment->save();
+    }
+
+    flash('Attachments imported successfully.')->success();
+    return redirect()->route('sites.attachments.index', $siteId);
+  }
 }

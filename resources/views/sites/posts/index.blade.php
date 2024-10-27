@@ -59,5 +59,14 @@
       </tbody>
     </table>
     {{ $posts->links() }}
+    <hr>
+    <!-- Import posts form -->
+    <form action="{{ route('sites.posts.import', $site) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <div class="input-group mb-3">
+        <input type="file" name="file" class="form-control" id="file" required>
+        <button type="submit" class="btn btn-outline-primary">Importar</button>
+      </div>
+    </form>
   </div>
 @endsection

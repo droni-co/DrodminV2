@@ -137,7 +137,7 @@ class SitePostController extends Controller
     $result = [];
     $posts = Post::select('props')->where('site_id', $siteId)->limit(50)->get();
     foreach ($posts as $post) {
-      $props = json_decode($post->props);
+      $props = json_decode($post->props ?? "[]");
       foreach ($props as $prop) {
         if (!in_array($prop->name, $result)) {
           $result[] = $prop->name;
@@ -145,5 +145,42 @@ class SitePostController extends Controller
       }
     }
     return $result;
+  }
+  public function import($siteId, Request $request)
+  {
+    $request->validate([
+      'file' => 'required|file|max:1024|mimes:csv,txt',
+    ]);
+    $file = $request->file('file');
+    $fileContent = fopen($file->getRealPath(), 'r');
+
+    $header = fgetcsv($fileContent, null, ';');
+    $rows = [];
+    while($row = fgetcsv($fileContent, null, ';')) {
+      $rows[] = array_combine($header, $row);
+    }
+    foreach($rows as $row) {
+      $slug = $row['slug'] ?? Str::slug($row['name'], '-');
+      if (Post::where('slug', $slug)->where('site_id', $siteId)->exists()) {
+        $slug = $slug . '-' . time();
+      }
+      $post = new Post();
+      $post->site_id = $siteId;
+      $post->user_id = Auth::user()->id;
+      $post->slug = $slug;
+      $post->name = $row['name'];
+      $post->description = $row['description'];
+      $post->picture = $row['picture'] ?? $row['image'];
+      $post->format = $row['format'];
+      $post->content = $row['content'];
+      $post->props = json_validate($row['props']) ? $row['props'] : '[]';
+      $post->active = $row['active'];
+      $post->created_at = $row['created_at'];
+      $post->updated_at = $row['updated_at'];
+      $post->save();
+    }
+
+    flash('Posts imported successfully.')->success();
+    return redirect()->route('sites.posts.index', $siteId);
   }
 }

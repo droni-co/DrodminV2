@@ -24,7 +24,9 @@ Route::middleware(SiteAdmin::class)->group(function () {
   Route::get('/sites/{site}/search', [SiteController::class, 'search'])->name('sites.search');
   Route::resource('sites', SiteController::class)->only(['show']);
   Route::resource('sites.posts', SitePostController::class);
+  Route::post('/sites/{site}/posts/import', [SitePostController::class, 'import'])->name('sites.posts.import');
   Route::resource('sites.attachments', SiteAttachmentController::class)->only(['index', 'store', 'destroy']);
+  Route::post('/sites/{site}/attachments/import', [SiteAttachmentController::class, 'import'])->name('sites.attachments.import');
   Route::resource('sites.categories', SiteCategoryController::class);
   Route::resource('sites.comments', SiteCommentController::class)->only(['index', 'update', 'destroy']);
 });
