@@ -11,7 +11,9 @@
       @foreach (Auth::user()->enrollments as $enrollment)
       <div class="card shadow mb-3">
         <div class="card-body">
-          <h5>{{ $enrollment->site->name }}</h5>
+          <a href="{{ route('sites.show', $enrollment->site)}}" title="{{ $enrollment->site->name }}">
+            <h5>{{ $enrollment->site->name }}</h5>
+          </a>
           <p>
             <small>
               <i class="mdi mdi-shield-crown-outline"></i> {{ $enrollment->role }}<br>
