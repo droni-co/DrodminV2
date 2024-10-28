@@ -88,7 +88,6 @@
     </div>
   </div>
   <div class="tab-pane fade" id="postProps" role="tabpanel" aria-labelledby="postProps-tab">
-    <props-component :props="{{ $post->props ?? "[]" }}" :datalist="{{ json_encode($propsDataList) }}"></props-component>
+    Attrs component
   </div>
-    
 </div>

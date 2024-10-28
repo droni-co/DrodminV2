@@ -28,12 +28,12 @@ class AuthController extends Controller
     }
     
     $user = User::firstOrCreate([
-      'email' => $socialiteUser->getEmail(),
-      'provider' => $request->provider
+      'email' => $socialiteUser->getEmail()
     ], [
       'name' => $socialiteUser->getName(),
       'avatar' => $socialiteUser->getAvatar(),
-      'password' => bcrypt(Str::random(24))
+      'password' => bcrypt(Str::random(24)),
+      'provider' => $request->provider
     ]);
 
     $enrollment = Enrollment::firstOrCreate([

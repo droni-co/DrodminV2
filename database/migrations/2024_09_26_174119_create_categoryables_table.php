@@ -11,10 +11,9 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('category_post', function (Blueprint $table) {
+    Schema::create('categoryables', function (Blueprint $table) {
       $table->foreignId('category_id')->constrained()->onDelete('cascade');
-      $table->foreignId('post_id')->constrained()->onDelete('cascade');
-      $table->primary(['category_id', 'post_id'])->unique();
+      $table->nullableMorphs('categoryable');
     });
   }
 
@@ -23,6 +22,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('categories');
+    Schema::dropIfExists('categoryables');
   }
 };

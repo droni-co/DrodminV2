@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Attr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,8 +34,7 @@ class SitePostController extends Controller
     $site = Site::findOrFail($siteId);
     $post = new Post();
     $categories = Category::where('site_id', $siteId)->orderBy('name')->get();
-    $propsDataList = self::getPropsName($siteId);
-    return view('sites.posts.create', compact('site', 'post', 'categories', 'propsDataList'));
+    return view('sites.posts.create', compact('site', 'post', 'categories'));
   }
 
   /**
@@ -61,7 +61,6 @@ class SitePostController extends Controller
     $post->picture = $request->picture;
     $post->format = $request->format;
     $post->content = $request->content;
-    $post->props = $request->props ?? '[]';
     $post->active = $request->active ?? false;
     $post->save();
 
@@ -87,8 +86,7 @@ class SitePostController extends Controller
     $site = Site::findOrFail($siteId);
     $post = Post::where('site_id', $siteId)->where('id', $id)->firstOrFail();
     $categories = Category::where('site_id', $siteId)->orderBy('name')->get();
-    $propsDataList = self::getPropsName($siteId);
-    return view('sites.posts.edit', compact('site', 'post', 'categories', 'propsDataList'));
+    return view('sites.posts.edit', compact('site', 'post', 'categories'));
   }
 
   /**
@@ -107,7 +105,6 @@ class SitePostController extends Controller
     $post->picture = $request->picture;
     $post->format = $request->format;
     $post->content = $request->content;
-    $post->props = $request->props ?? '[]';
     $post->active = $request->active ?? false;
     $post->save();
 
@@ -131,20 +128,6 @@ class SitePostController extends Controller
 
     flash('Post deleted successfully!')->success();
     return redirect()->route('sites.posts.index', $siteId);
-  }
-  public static function getPropsName($siteId)
-  {
-    $result = [];
-    $posts = Post::select('props')->where('site_id', $siteId)->limit(50)->get();
-    foreach ($posts as $post) {
-      $props = json_decode($post->props ?? "[]");
-      foreach ($props as $prop) {
-        if (!in_array($prop->name, $result)) {
-          $result[] = $prop->name;
-        }
-      }
-    }
-    return $result;
   }
   public function import($siteId, Request $request)
   {

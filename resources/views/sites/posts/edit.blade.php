@@ -14,7 +14,7 @@
     </monaco-editor>
     <div class="col-md-5 col-lg-4 py-3 d-flex flex-column border">
       <div class="flex-grow-1">
-        @include('sites.posts._form', [$post, $categories, $propsDataList])
+        @include('sites.posts._form', [$post, $categories])
       </div>
       <div class="d-flex justify-content-between">
         <div>

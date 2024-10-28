@@ -17,7 +17,7 @@
           <th>Categoría</th>
           <th>Descripción</th>
           <th>Imagen</th>
-          <th>Posts</th>
+          <th>Categorizados</th>
           <th>TimeStamps</th>
         </tr>
       </thead>

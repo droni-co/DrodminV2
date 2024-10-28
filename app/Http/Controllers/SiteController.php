@@ -21,9 +21,7 @@ class SiteController extends Controller
   {
     $site = Site::findOrFail($siteId);
     $lastPosts = Post::where('site_id', $siteId)->orderBy('created_at', 'desc')->limit(5)->get();
-    $lastComments = Comment::whereHas('post', function($query) use ($siteId) {
-      $query->where('site_id', $siteId);
-    })->orderBy('updated_at', 'desc')->limit(10)->get();
+    $lastComments = Comment::where('site_id', $siteId)->orderBy('updated_at', 'desc')->limit(10)->get();
     
     return view('sites.show', compact('site', 'lastPosts', 'lastComments'));
   }

@@ -11,18 +11,13 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('posts', function (Blueprint $table) {
+    Schema::create('attrs', function (Blueprint $table) {
       $table->id();
-      $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
       $table->foreignUuid('site_id')->constrained()->onDelete('cascade');
-      $table->string('slug');
-      $table->unique(['site_id', 'slug']);
+      $table->nullableMorphs('attributable');
       $table->string('name');
-      $table->text('description')->nullable();
-      $table->string('picture')->nullable();
-      $table->text('content')->nullable();
-      $table->string('format')->default('markdown');
-      $table->boolean('active')->default(false);
+      $table->string('type')->default('string');
+      $table->string('value');
       $table->timestamps();
     });
   }
@@ -32,6 +27,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('posts');
+    Schema::dropIfExists('attrs');
   }
 };
