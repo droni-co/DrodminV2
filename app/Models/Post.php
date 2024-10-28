@@ -26,9 +26,12 @@ class Post extends Model
   {
       return $this->morphToMany(Category::class, 'categoryable');
   }
-  public function comments()
+  /**
+   * Get all of the post's comments.
+   */
+  public function comments(): MorphMany
   {
-    return $this->hasMany(Comment::class)->whereNotNull('approved_at')->whereNull('parent_id');
+      return $this->morphMany(Comment::class, 'commentable')->whereNotNull('approved_at')->whereNull('parent_id');
   }
   public function attrs()
   {

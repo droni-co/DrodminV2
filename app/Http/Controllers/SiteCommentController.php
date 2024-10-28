@@ -18,9 +18,7 @@ class SiteCommentController extends Controller
     public function index($siteId)
     {
       $site = Site::findOrFail($siteId);
-      $comments = Comment::whereHas('post', function($query) use ($siteId) {
-        $query->where('site_id', $siteId);
-      })->orderBy('updated_at', 'desc')->paginate(40);
+      $comments = Comment::where('site_id', $siteId)->orderBy('updated_at', 'desc')->paginate(40);
 
       return view('sites.comments.index', compact('site', 'comments'));
     }
@@ -30,9 +28,7 @@ class SiteCommentController extends Controller
      */
     public function update($siteId, Request $request, string $id)
     {
-      $comment = Comment::where('id', $id)->whereHas('post', function($query) use ($siteId) {
-        $query->where('site_id', $siteId);
-      })->firstOrFail();
+      $comment = Comment::where('id', $id)->where('site_id', $siteId)->firstOrFail();
       $comment->approved_at = now();
       $comment->save();
 
@@ -46,9 +42,7 @@ class SiteCommentController extends Controller
      */
     public function destroy($siteId, string $id)
     {
-      $comment = Comment::where('id', $id)->whereHas('post', function($query) use ($siteId) {
-        $query->where('site_id', $siteId);
-      })->firstOrFail();
+      $comment = Comment::where('id', $id)->where('site_id', $siteId)->firstOrFail();
       // delete children comments
       $comment->children()->delete();
       $comment->delete();

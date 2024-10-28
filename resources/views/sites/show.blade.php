@@ -35,9 +35,7 @@
               <small class="text-muted">
                 {{ $comment->updated_at->diffForHumans() }} por
                 {{ $comment->user->name }} en
-                <a href="{{ route('sites.posts.edit', [$site, $comment->post]) }}">
-                  {{ $comment->post->name }}
-                </a>
+                {{ $comment->commentable->name }}
               </small><br>
               {{ $comment->content }}
             </p>

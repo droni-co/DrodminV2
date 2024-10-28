@@ -18,14 +18,9 @@ class SitePostCommentController extends Controller
       $post = Post::where('site_id', $siteId)
         ->where('id', $postId)
         ->where('active', true)
-        ->with(['categories', 'user'])
         ->firstOrFail();
       
-      return Comment::where('post_id', $post->id)
-        ->whereNotNull('approved_at')
-        ->whereNull('parent_id')
-        ->with(['user', 'children'])
-        ->paginate(30);
+      return $post->comments()->with(['user', 'children'])->paginate(30);
     }
 
     /**
@@ -40,19 +35,18 @@ class SitePostCommentController extends Controller
       $post = Post::where('site_id', $siteId)
         ->where('id', $postId)
         ->where('active', true)
-        ->with(['categories', 'user'])
         ->firstOrFail();
 
-      $parent = Comment::where('post_id', $post->id)
+      $parent = $post->comments()
         ->where('id', $request->parent_id ?? 0)
         ->first();
 
       $comment = new Comment();
+      $comment->user_id = Auth::user()->id;
+      $comment->site_id = $siteId;
       $comment->content = $request->content;
       $comment->parent_id = $parent ? $parent->id : null;
-      $comment->post_id = $post->id;
-      $comment->user_id = Auth::user()->id;
-      $comment->save();
+      $post->comments()->save($comment);
       
       return $comment;
     }
