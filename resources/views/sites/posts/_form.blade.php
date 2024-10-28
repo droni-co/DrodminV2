@@ -88,6 +88,7 @@
     </div>
   </div>
   <div class="tab-pane fade" id="postProps" role="tabpanel" aria-labelledby="postProps-tab">
+    @if($post->id)
     <attrs-component
       :site="{{ $site->toJson() }}"
       :attrs="{{ $post->attrs->toJson() }}"
@@ -95,5 +96,11 @@
       attributable-type="App\Models\Post"
       >
     </attrs-component>
+    @else
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">¡Atención!</h4>
+      <p>Para poder agregar propiedades a este post, primero debes guardarlo.</p>
+    </div>
+    @endif
   </div>
 </div>
