@@ -8,7 +8,7 @@
         <form action="" method="GET" class="px-3">
           <input type="search" name="search" class="form-control rounded-pill" placeholder="Buscar...">
         </form>
-        <form action="{{ route('sites.attachments.store', $site) }}" method="POST" enctype="multipart/form-data">
+        <form class="me-2" action="{{ route('sites.attachments.store', $site) }}" method="POST" enctype="multipart/form-data">
           @csrf
           <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
           <label for="file" class="btn btn-outline-primary">
@@ -16,12 +16,20 @@
             Subir archivo
           </label>
         </form>
+        <form action="{{ route('sites.attachments.import', $site) }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
+          <label for="file" class="btn btn-outline-secondary">
+            <i class="mdi mdi-import"></i>
+            Importar
+          </label>
+        </form>
       </div>
     </div>
     <div class="row my-3">
       @foreach($attachments as $attachment)
         <div class="col-md-3">
-          <div class="card shadow">
+          <div class="card shadow mb-2">
             <a href="{{ Storage::disk('digitalocean')->url($attachment->path) }}" target="_blank">
               @if(Str::startsWith($attachment->mime_type, 'image'))
                 <img src="{{ Storage::disk('digitalocean')->url($attachment->path) }}" class="card-img-top" alt="{{ $attachment->name }}">
@@ -49,15 +57,5 @@
         </div>
       @endforeach
       {{ $attachments->links() }}
-      <hr>
-      <!-- import form -->
-      <form action="{{ route('sites.attachments.import', $site) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="input-group mb-3">
-          <input type="file" name="file" class="form-control" id="file" required>
-          <button type="submit" class="btn btn-outline-primary">Importar</button>
-        </div>
-      </form>
-
   </div>
 @endsection
