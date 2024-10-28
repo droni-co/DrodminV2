@@ -156,11 +156,22 @@ class SitePostController extends Controller
       $post->picture = $row['picture'] ?? $row['image'];
       $post->format = $row['format'];
       $post->content = $row['content'];
-      $post->props = json_validate($row['props']) ? $row['props'] : '[]';
       $post->active = $row['active'];
       $post->created_at = $row['created_at'];
       $post->updated_at = $row['updated_at'];
       $post->save();
+
+      if(json_validate($row['props'])) {
+        $attrs = json_decode($row['props'], true);
+        foreach($attrs as $attr) {
+          $newAttr = new Attr();
+          $newAttr->site_id = $siteId;
+          $newAttr->attributable()->associate($post);
+          $newAttr->name = $attr['name'];
+          $newAttr->value = $attr['value'];
+          $newAttr->save();
+        }
+      }
     }
 
     flash('Posts imported successfully.')->success();

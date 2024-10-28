@@ -14,6 +14,15 @@
             Crear nuevo
           </a>
         </div>
+        <!-- Import posts form -->
+        <form class="ms-2" action="{{ route('sites.posts.import', $site) }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
+          <label for="file" class="btn btn-outline-secondary">
+            <i class="mdi mdi-import"></i>
+            Importar
+          </label>
+        </form>
       </div>
     </div>
     <table class="table table-striped table-hover">
@@ -59,14 +68,5 @@
       </tbody>
     </table>
     {{ $posts->links() }}
-    <hr>
-    <!-- Import posts form -->
-    <form action="{{ route('sites.posts.import', $site) }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <div class="input-group mb-3">
-        <input type="file" name="file" class="form-control" id="file" required>
-        <button type="submit" class="btn btn-outline-primary">Importar</button>
-      </div>
-    </form>
   </div>
 @endsection
