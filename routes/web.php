@@ -6,6 +6,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SitePostController;
 use App\Http\Controllers\SiteAttachmentController;
+use App\Http\Controllers\SiteAttrController;
 use App\Http\Controllers\SiteCategoryController;
 use App\Http\Controllers\SiteCommentController;
 
@@ -29,4 +30,5 @@ Route::middleware(SiteAdmin::class)->group(function () {
   Route::post('/sites/{site}/attachments/import', [SiteAttachmentController::class, 'import'])->name('sites.attachments.import');
   Route::resource('sites.categories', SiteCategoryController::class);
   Route::resource('sites.comments', SiteCommentController::class)->only(['index', 'update', 'destroy']);
+  Route::resource('sites.attrs', SiteAttrController::class)->only(['index', 'store', 'update', 'destroy']);
 });

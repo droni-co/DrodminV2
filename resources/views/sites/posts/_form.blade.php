@@ -88,6 +88,12 @@
     </div>
   </div>
   <div class="tab-pane fade" id="postProps" role="tabpanel" aria-labelledby="postProps-tab">
-    Attrs component
+    <attrs-component
+      :site="{{ $site->toJson() }}"
+      :attrs="{{ $post->attrs->toJson() }}"
+      :attributable="{{ $post->toJson() }}"
+      attributable-type="App\Models\Post"
+      >
+    </attrs-component>
   </div>
 </div>
