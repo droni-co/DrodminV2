@@ -28,20 +28,10 @@
     </div>
     <div class="col-md-8">
       <h4>Últimos comentarios</h4>
-      <ul class="list-group">
+
         @foreach($lastComments as $comment)
-          <li class="list-group-item">
-            <p class="m-0">
-              <small class="text-muted">
-                {{ $comment->updated_at->diffForHumans() }} por
-                {{ $comment->user->name }} en
-                {{ $comment->commentable->name }}
-              </small><br>
-              {{ $comment->content }}
-            </p>
-          </li>
+          @include('sites.comments._card', ['comment' => $comment])
         @endforeach
-      </ul>
     </div>
   </div>
 </div>

@@ -16,6 +16,10 @@ class Comment extends Model
   {
     return $this->morphTo();
   }
+  public function site()
+  {
+    return $this->belongsTo(Site::class);
+  }
 
   public function user()
   {

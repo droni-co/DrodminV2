@@ -20,7 +20,7 @@ class SiteController extends Controller
   public function show($siteId)
   {
     $site = Site::findOrFail($siteId);
-    $lastPosts = Post::where('site_id', $siteId)->orderBy('created_at', 'desc')->limit(5)->get();
+    $lastPosts = Post::where('site_id', $siteId)->orderBy('created_at', 'desc')->limit(3)->get();
     $lastComments = Comment::where('site_id', $siteId)->orderBy('updated_at', 'desc')->limit(10)->get();
     
     return view('sites.show', compact('site', 'lastPosts', 'lastComments'));
