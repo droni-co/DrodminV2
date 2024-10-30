@@ -27,7 +27,7 @@
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
               <div class="col px-1">
                 <label class="card cardSelector" for="file">
-                  <input type="file" id="file" class="d-none" @change="uploadFile">
+                  <input type="file" id="file" class="d-none" @change="uploadFile" :accept="props.accept">
                   <div class="fs-1 text-center bg-secondary py-4">
                     <i class="mdi mdi-cloud-upload-outline"></i>
                   </div>
@@ -65,10 +65,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-  format: {
-    type: String,
-    default: 'markdown'
-  },
   name: {
     type: String,
     default: 'editor'
@@ -76,7 +72,20 @@ const props = defineProps({
   siteId: {
     type: String,
     required: true
+  },
+  accept: {
+    type: String,
+    default: '*/*'
+  },
+  width: {
+    type: Number,
+    default: 0
+  },
+  height: {
+    type: Number,
+    default: 0
   }
+
 });
 
 const refModal = useTemplateRef('attachmentList')
@@ -104,7 +113,7 @@ const exploreFiles = () => {
 };
 
 const loadFiles = () => {
-  axios.get(`/sites/${props.siteId}/attachments?page=${page.value}&search=${search.value}`)
+  axios.get(`/sites/${props.siteId}/attachments?page=${page.value}&search=${search.value}&accept=${props.accept}`)
     .then(response => {
       attachments.value = response.data;
     })
@@ -124,6 +133,8 @@ const selectAttachment = (attachment) => {
 const uploadFile = (event) => {
   const formData = new FormData();
   formData.append('file', event.target.files[0]);
+  formData.append('width', props.width);
+  formData.append('height', props.height);
   axios.post(`/sites/${props.siteId}/attachments`, formData)
     .then(response => {
       localValue.value = response.data.url;

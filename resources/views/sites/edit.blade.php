@@ -19,8 +19,15 @@
           <label for="floatingTextarea">Descripción</label>
         </div>
         <div class="mb-3">
-          <label for="picture">Imagen</label>
-          <attachment-input site-id="{{ $site->id }}" name="picture" accept="" value="{{ old('picture', $site->picture) }}"></attachment-input>
+          <label for="logo">Logo</label>
+          <attachment-input
+            site-id="{{ $site->id }}"
+            name="logo"
+            accept="image/*"
+            :width="100"
+            :height="100"
+            value="{{ old('logo', $site->logo) }}">
+          </attachment-input>
         </div>
         <div class="form-floating mb-3">
           <button type="submit" class="btn btn-primary">

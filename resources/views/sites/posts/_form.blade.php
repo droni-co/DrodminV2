@@ -52,7 +52,14 @@
     </div>
     <div class="mb-3">
       <label for="picture">Imagen</label>
-      <attachment-input site-id="{{ $site->id }}" name="picture" accept="" value="{{ old('picture', $post->picture) }}"></attachment-input>
+      <attachment-input
+        site-id="{{ $site->id }}"
+        name="picture"
+        accept="image/*"
+        :width="1200"
+        :height="600"
+        value="{{ old('picture', $post->picture) }}">
+      </attachment-input>
     </div>
     <div class="form-floating mb-3">
       <select class="form-select" id="format" name="format">

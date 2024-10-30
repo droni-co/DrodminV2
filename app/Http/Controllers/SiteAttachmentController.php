@@ -7,6 +7,9 @@ use App\Models\Attachment;
 use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
+use Illuminate\Http\File;
+use Illuminate\Support\Str;
 
 class SiteAttachmentController extends Controller
 {
@@ -19,6 +22,9 @@ class SiteAttachmentController extends Controller
     $attachments = Attachment::where('site_id', $siteId);
     if($request->has('search')) {
       $attachments = $attachments->where('name', 'like', '%'.$request->search.'%');
+    }
+    if($request->has('accept')) {
+      $attachments = $attachments->where('mime_type', 'like', '%'.explode('/', $request->accept)[0].'%');
     }
     $attachments = $attachments->orderBy('created_at', 'desc')->paginate(24);
 
@@ -35,12 +41,29 @@ class SiteAttachmentController extends Controller
   {
     $request->validate([
       'file' => 'required|file|max:1024|mimes:gif,png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx',
+      'width' => 'integer',
+      'height' => 'integer',
     ]);
+
+    
     $attachment = new Attachment();
     $attachment->user_id = Auth::user()->id;
     $attachment->site_id = $siteId;
     $attachment->name = $request->file('file')->getClientOriginalName();
-    $attachment->path = Storage::disk('digitalocean')->putFile($siteId.'/'.Auth::user()->id, request()->file, 'public');
+    // transform image
+    if($request->width > 0 && $request->height > 0) {
+      $img = Image::read($request->file('file'));
+      $imgfinal = (string) $img->cover($request->width, $request->height)->toWebp(60);
+      // Store File Temporary
+      $randomStr = Str::random(40).".webp";
+      Storage::disk('local')->put('tmp/'.$randomStr, $imgfinal);
+      $imgfinal = new File(Storage::path('tmp/'.$randomStr));
+      $attachment->path = Storage::disk('digitalocean')->putFile($siteId.'/'.Auth::user()->id, $imgfinal, 'public');
+      // Delete temporary file
+      Storage::disk('local')->delete('tmp/'.$randomStr);
+    } else {
+      $attachment->path = Storage::disk('digitalocean')->putFile($siteId.'/'.Auth::user()->id, $request->file('file'), 'public');
+    }
     $attachment->size = $request->file('file')->getSize();
     $attachment->extension = $request->file('file')->extension();
     $attachment->mime_type = $request->file('file')->getMimeType();
