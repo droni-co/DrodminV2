@@ -156,14 +156,14 @@ class SitePostController extends Controller
       $post->name = $row['name'];
       $post->description = $row['description'];
       $post->picture = $row['picture'] ?? $row['image'];
-      $post->format = $row['format'];
+      $post->format = $row['format'] ?? 'html';
       $post->content = $row['content'];
       $post->active = $row['active'];
       $post->created_at = $row['created_at'];
       $post->updated_at = $row['updated_at'];
       $post->save();
 
-      if(json_validate($row['props'])) {
+      if(json_validate($row['props'] ?? null)) {
         $attrs = json_decode($row['props'], true);
         foreach($attrs as $attr) {
           $newAttr = new Attr();
@@ -180,3 +180,4 @@ class SitePostController extends Controller
     return redirect()->route('sites.posts.index', $siteId);
   }
 }
+/* "name";"slug";"picture";"attachment";"description";"content";"tags";"source";"active";"created_at";"updated_at" */

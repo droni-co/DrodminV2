@@ -19,14 +19,31 @@
           <label for="floatingTextarea">Descripción</label>
         </div>
         <div class="mb-3">
-          <label for="logo">Logo</label>
+          <label for="logo">
+            Logo
+            <small>250x150px</small>
+          </label>
           <attachment-input
             site-id="{{ $site->id }}"
             name="logo"
             accept="image/*"
-            :width="100"
-            :height="100"
+            :width="250"
+            :height="150"
             value="{{ old('logo', $site->logo) }}">
+          </attachment-input>
+        </div>
+        <div class="mb-3">
+          <label for="icon">
+            Icono
+            <small>400x400px</small>
+          </label>
+          <attachment-input
+            site-id="{{ $site->id }}"
+            name="icon"
+            accept="image/*"
+            :width="400"
+            :height="400"
+            value="{{ old('icon', $site->icon) }}">
           </attachment-input>
         </div>
         <div class="form-floating mb-3">

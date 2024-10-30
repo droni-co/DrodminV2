@@ -13,7 +13,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('sites.show', $site) }}">
             <i class="mdi mdi-view-dashboard-outline"></i>
-            Dashboard
+            {{ $site->name }}
           </a>
         </li>
         <li class="nav-item dropdown">

@@ -30,6 +30,22 @@ class SiteController extends Controller
     $site = Site::findOrFail($siteId);
     return view('sites.edit', compact('site'));
   }
+  public function update(Request $request, $siteId)
+  {
+    $request->validate([
+      'name' => 'required',
+      'description' => 'required',
+    ]);
+    $site = Site::findOrFail($siteId);
+    $site->name = $request->name;
+    $site->description = $request->description;
+    $site->logo = $request->logo;
+    $site->icon = $request->icon;
+    $site->save();
+
+    flash('Site updated successfully')->success();
+    return redirect()->route('home');
+  }
   public function search(Request $request, $siteId)
   {
     $site = Site::findOrFail($siteId);

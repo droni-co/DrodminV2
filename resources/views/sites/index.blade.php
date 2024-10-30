@@ -6,12 +6,11 @@
     <h1>Dashboard</h1>
   </div>
   <div class="row my-3">
-    <div class="col-md-4">
-      <h4>Sitios</h4>
-      @foreach (Auth::user()->enrollments as $enrollment)
+    @foreach (Auth::user()->enrollments as $enrollment)
+      <div class="col-md-4">
         @include('sites._card', ['site' => $enrollment->site])
-      @endforeach
-    </div>
+      </div>
+    @endforeach
   </div>
 </div>
 @endsection
