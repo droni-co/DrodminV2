@@ -16,6 +16,6 @@ class Category extends Model
    */
   public function posts(): MorphToMany
   {
-      return $this->morphedByMany(Post::class, 'categoryable');
+    return $this->morphedByMany(Post::class, 'categoryable');
   }
 }
