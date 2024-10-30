@@ -133,8 +133,8 @@ const selectAttachment = (attachment) => {
 const uploadFile = (event) => {
   const formData = new FormData();
   formData.append('file', event.target.files[0]);
-  formData.append('width', props.width);
-  formData.append('height', props.height);
+  formData.append('width', props.width.toString());
+  formData.append('height', props.height.toString());
   axios.post(`/sites/${props.siteId}/attachments`, formData)
     .then(response => {
       localValue.value = response.data.url;

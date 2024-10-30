@@ -123,7 +123,9 @@ class SitePostController extends Controller
     $request->validate([
       'validator' => 'required|in:' . $post->slug,
     ]);
-
+    $post->categories()->detach();
+    $post->attrs()->delete();
+    $post->comments()->delete();
     $post->delete();
 
     flash('Post deleted successfully!')->success();

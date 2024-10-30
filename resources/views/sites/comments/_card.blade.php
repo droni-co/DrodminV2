@@ -7,7 +7,7 @@
           <i class="mdi mdi-account"></i>
           {{ $comment->user->name }}
           <i class="mdi mdi-pencil-box-multiple-outline"></i>
-          {{ $comment->commentable->name }}
+          {{ $comment->commentable->name ?? 'falla' }}
           <i class="mdi mdi-calendar"></i>
           {{ $comment->created_at }}
         </small>
