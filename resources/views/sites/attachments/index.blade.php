@@ -10,16 +10,16 @@
         </form>
         <form class="me-2" action="{{ route('sites.attachments.store', $site) }}" method="POST" enctype="multipart/form-data">
           @csrf
-          <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
-          <label for="file" class="btn btn-outline-primary">
+          <input type="file" name="file" id="fileUpload" class="d-none" onchange="this.form.submit()">
+          <label for="fileUpload" class="btn btn-outline-primary">
             <i class="mdi mdi-upload"></i>
             Subir archivo
           </label>
         </form>
         <form action="{{ route('sites.attachments.import', $site) }}" method="POST" enctype="multipart/form-data">
           @csrf
-          <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
-          <label for="file" class="btn btn-outline-secondary">
+          <input type="file" name="file" id="fileImport" class="d-none" onchange="this.form.submit()">
+          <label for="fileImport" class="btn btn-outline-secondary">
             <i class="mdi mdi-import"></i>
             Importar
           </label>

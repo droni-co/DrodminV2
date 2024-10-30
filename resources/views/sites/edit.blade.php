@@ -34,7 +34,7 @@
       <attrs-component
         :site="{{ $site->toJson() }}"
         :attrs="{{ $site->attrs->toJson() }}"
-        :attributable="{id: null}"
+        :attributable="{{ $site->toJson() }}"
         attributable-type="App\Models\Site"
         >
       </attrs-component>
