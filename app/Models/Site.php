@@ -18,4 +18,8 @@ class Site extends Model
   {
     return $this->hasMany(Post::class);
   }
+  public function attrs()
+  {
+    return $this->morphMany(Attr::class, 'attributable');
+  }
 }

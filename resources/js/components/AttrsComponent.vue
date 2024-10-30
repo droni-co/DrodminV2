@@ -27,7 +27,7 @@
       </button>
     </div>
     <hr>
-    <div v-for="localAttr in localAttrs" :key="localAttr" class="form-floating mb-3 mt-2">
+    <div v-for="localAttr in localAttrs" :key="localAttr.id" class="form-floating mb-3 mt-2">
       <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close" @click="removeAttr(localAttr)"></button>
       <input type="text" class="form-control" id="attrValue" placeholder="valor" required v-model="localAttr.value">
       <label for="attrValue">{{ localAttr.name }}</label>
@@ -37,17 +37,17 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { defineProps, ref } from 'vue';
+import { defineProps, PropType, ref } from 'vue';
 interface Attr {
-  id: number
-  site_id: string
-  attributable_type: string
-  attributable_id: number
+  id?: number
+  site_id?: string
+  attributable_type?: string
+  attributable_id?: number
   name: string
-  type: string
+  type?: string
   value: string
-  created_at: string
-  updated_at: string
+  created_at?: string
+  updated_at?: string
 }
 const props = defineProps({
   attrs: {

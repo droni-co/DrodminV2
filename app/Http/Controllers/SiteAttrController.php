@@ -14,8 +14,8 @@ class SiteAttrController extends Controller
   public function index($siteId, Request $request)
   {
     $attrs = Attr::where('site_id', $siteId);
-    if($request->has('attributable_type')) {
-      $attrs = $attrs->where('attributable_type', $request->attributable_type);
+    if($request->has('attributableType')) {
+      $attrs = $attrs->where('attributable_type', $request->attributableType);
     }
     return response()->json($attrs->distinct()->pluck('name'));
   }

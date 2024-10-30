@@ -25,6 +25,11 @@ class SiteController extends Controller
     
     return view('sites.show', compact('site', 'lastPosts', 'lastComments'));
   }
+  public function edit($siteId)
+  {
+    $site = Site::findOrFail($siteId);
+    return view('sites.edit', compact('site'));
+  }
   public function search(Request $request, $siteId)
   {
     $site = Site::findOrFail($siteId);

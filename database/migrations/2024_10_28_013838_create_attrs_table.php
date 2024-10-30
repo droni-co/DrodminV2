@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('attrs', function (Blueprint $table) {
       $table->id();
       $table->foreignUuid('site_id')->constrained()->onDelete('cascade');
-      $table->nullableMorphs('attributable');
+      $table->uuidMorphs('attributable');
       $table->string('name');
       $table->string('type')->default('string');
       $table->string('value');

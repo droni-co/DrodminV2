@@ -12,8 +12,8 @@ return new class extends Migration
   public function up(): void
   {
     Schema::create('categoryables', function (Blueprint $table) {
-      $table->foreignId('category_id')->constrained()->onDelete('cascade');
-      $table->nullableMorphs('categoryable');
+      $table->foreignUuid('category_id')->constrained()->onDelete('cascade');
+      $table->uuidMorphs('categoryable');
     });
   }
 

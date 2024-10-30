@@ -9,20 +9,7 @@
     <div class="col-md-4">
       <h4>Sitios</h4>
       @foreach (Auth::user()->enrollments as $enrollment)
-      <div class="card shadow mb-3">
-        <div class="card-body">
-          <a href="{{ route('sites.show', $enrollment->site)}}" title="{{ $enrollment->site->name }}">
-            <h5>{{ $enrollment->site->name }}</h5>
-          </a>
-          <p>
-            <small>
-              <i class="mdi mdi-shield-crown-outline"></i> {{ $enrollment->role }}<br>
-              <i class="mdi mdi-update"></i> {{ $enrollment->site->updated_at }}<br>
-            </small>
-            {{ $enrollment->site->description }}
-          </p>
-        </div>
-      </div>
+        @include('sites._card', ['site' => $enrollment->site])
       @endforeach
     </div>
   </div>

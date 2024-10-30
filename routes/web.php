@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
 // Admin sites
 Route::middleware(SiteAdmin::class)->group(function () {
   Route::get('/sites/{site}/search', [SiteController::class, 'search'])->name('sites.search');
-  Route::resource('sites', SiteController::class)->only(['show']);
+  Route::resource('sites', SiteController::class)->only(['show', 'edit', 'update']);
   Route::resource('sites.posts', SitePostController::class);
   Route::post('/sites/{site}/posts/import', [SitePostController::class, 'import'])->name('sites.posts.import');
   Route::resource('sites.attachments', SiteAttachmentController::class)->only(['index', 'store', 'destroy']);
