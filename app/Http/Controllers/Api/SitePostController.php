@@ -45,10 +45,10 @@ class SitePostController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show($siteId, string $id)
+  public function show($siteId, string $slug)
   {
     return Post::where('site_id', $siteId)
-      ->where('id', $id)
+      ->where('slug', $slug)
       ->where('active', true)
       ->with(['categories', 'user'])
       ->firstOrFail();
