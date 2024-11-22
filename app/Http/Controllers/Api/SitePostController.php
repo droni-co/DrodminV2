@@ -50,7 +50,7 @@ class SitePostController extends Controller
     return Post::where('site_id', $siteId)
       ->where('slug', $slug)
       ->where('active', true)
-      ->with(['categories', 'user'])
+      ->with(['categories', 'user', 'attrs'])
       ->firstOrFail();
   }
 }
