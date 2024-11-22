@@ -13,10 +13,10 @@ class SitePostCommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $siteId, $postId)
+    public function index(string $siteId, $slug)
     {
       $post = Post::where('site_id', $siteId)
-        ->where('id', $postId)
+        ->where('slug', $slug)
         ->where('active', true)
         ->firstOrFail();
       
@@ -26,14 +26,14 @@ class SitePostCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(string $siteId, $postId, Request $request)
+    public function store(string $siteId, $slug, Request $request)
     {
       $request->validate([
         'content' => 'required',
         'parent_id' => 'nullable|exists:comments,id'
       ]);
       $post = Post::where('site_id', $siteId)
-        ->where('id', $postId)
+        ->where('slug', $slug)
         ->where('active', true)
         ->firstOrFail();
 
