@@ -19,11 +19,20 @@ class SitePostController extends Controller
   {
     $site = Site::findOrFail($siteId);
     $posts = Post::where('site_id', $siteId)->orderBy('updated_at', 'desc');
-    if ($request->has('search')) {
+    if ($request->search) {
       $posts->where('name', 'like', '%' . $request->search . '%');
     }
+    if ($request->category) {
+      $posts->whereHas('categories', function ($query) use ($request) {
+        $query->where('category_id', $request->category);
+      });
+    }
     $posts = $posts->paginate(10);
-    return view('sites.posts.index', compact('site', 'posts'));
+
+    $posts->appends($request->only('search', 'category'));
+
+    $categories = Category::where('site_id', $siteId)->orderBy('name',)->get();
+    return view('sites.posts.index', compact('site', 'posts', 'categories'));
   }
 
   /**
@@ -131,53 +140,4 @@ class SitePostController extends Controller
     flash('Post deleted successfully!')->success();
     return redirect()->route('sites.posts.index', $siteId);
   }
-  public function import($siteId, Request $request)
-  {
-    $request->validate([
-      'file' => 'required|file|max:1024|mimes:csv,txt',
-    ]);
-    $file = $request->file('file');
-    $fileContent = fopen($file->getRealPath(), 'r');
-
-    $header = fgetcsv($fileContent, null, ';');
-    $rows = [];
-    while($row = fgetcsv($fileContent, null, ';')) {
-      $rows[] = array_combine($header, $row);
-    }
-    foreach($rows as $row) {
-      $slug = $row['slug'] ?? Str::slug($row['name'], '-');
-      if (Post::where('slug', $slug)->where('site_id', $siteId)->exists()) {
-        $slug = $slug . '-' . time();
-      }
-      $post = new Post();
-      $post->site_id = $siteId;
-      $post->user_id = Auth::user()->id;
-      $post->slug = $slug;
-      $post->name = $row['name'];
-      $post->description = $row['description'];
-      $post->picture = $row['picture'] ?? $row['image'];
-      $post->format = $row['format'] ?? 'html';
-      $post->content = $row['content'];
-      $post->active = $row['active'];
-      $post->created_at = $row['created_at'];
-      $post->updated_at = $row['updated_at'];
-      $post->save();
-
-      if(json_validate($row['props'] ?? null)) {
-        $attrs = json_decode($row['props'], true);
-        foreach($attrs as $attr) {
-          $newAttr = new Attr();
-          $newAttr->site_id = $siteId;
-          $newAttr->attributable()->associate($post);
-          $newAttr->name = $attr['name'];
-          $newAttr->value = $attr['value'];
-          $newAttr->save();
-        }
-      }
-    }
-
-    flash('Posts imported successfully.')->success();
-    return redirect()->route('sites.posts.index', $siteId);
-  }
 }
-/* "name";"slug";"picture";"attachment";"description";"content";"tags";"source";"active";"created_at";"updated_at" */
