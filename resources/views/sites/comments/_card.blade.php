@@ -40,9 +40,9 @@
     @if($comment->parent)
     <div class="text-secondary">
       <strong>Respuesta a:</strong>
-      <pre>{{ $comment->parent->content }}</pre>
+      <small>{{ $comment->parent->content }}</small>
     </div>
     @endif
-    <pre>{{ $comment->content }}</pre>
+    <small>{{ $comment->content }}</small>
   </div>
 </div>
