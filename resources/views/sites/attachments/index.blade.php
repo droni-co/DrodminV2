@@ -16,14 +16,6 @@
             Subir archivo
           </label>
         </form>
-        <form action="{{ route('sites.attachments.import', $site) }}" method="POST" enctype="multipart/form-data">
-          @csrf
-          <input type="file" name="file" id="fileImport" class="d-none" onchange="this.form.submit()">
-          <label for="fileImport" class="btn btn-outline-secondary">
-            <i class="mdi mdi-import"></i>
-            Importar
-          </label>
-        </form>
       </div>
     </div>
     <div class="row my-3">

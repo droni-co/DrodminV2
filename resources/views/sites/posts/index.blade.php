@@ -5,8 +5,19 @@
     <div class="border-bottom py-3 d-flex">
       <h1>Posts</h1>
       <div class="flex-grow-1 text-end pt-1 d-flex justify-content-end">
-        <form action="" method="GET" class="px-3">
-          <input type="search" name="search" class="form-control rounded-pill" placeholder="Buscar...">
+        <form action="" method="GET" class="px-3 d-flex">
+          <select name="category" class="form-select rounded-start-pill">
+            <option value="">Todas las categorías</option>
+            @foreach($categories as $category)
+              <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+              </option>
+            @endforeach
+          </select>
+          <input type="search" name="search" class="form-control rounded-0" placeholder="Buscar..." value="{{ request('search') }}">
+          <button type="submit" class="btn btn-outline-primary rounded-end-pill pe-3">
+            <i class="mdi mdi-magnify"></i>
+          </button>
         </form>
         <div>
           <a href="{{ route('sites.posts.create', $site) }}" class="btn btn-outline-primary">
@@ -14,15 +25,6 @@
             Crear nuevo
           </a>
         </div>
-        <!-- Import posts form -->
-        <form class="ms-2" action="{{ route('sites.posts.import', $site) }}" method="POST" enctype="multipart/form-data">
-          @csrf
-          <input type="file" name="file" id="file" class="d-none" onchange="this.form.submit()">
-          <label for="file" class="btn btn-outline-secondary">
-            <i class="mdi mdi-import"></i>
-            Importar
-          </label>
-        </form>
       </div>
     </div>
     <table class="table table-striped table-hover">

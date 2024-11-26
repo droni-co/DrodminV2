@@ -89,43 +89,4 @@ class SiteAttachmentController extends Controller
     flash('Attachment deleted successfully.')->success();
     return redirect()->route('sites.attachments.index', $siteId);
   }
-
-  public function import($siteId, Request $request)
-  {
-    $request->validate([
-      'file' => 'required|file|max:1024|mimes:csv,txt',
-    ]);
-    $file = $request->file('file');
-    $fileContent = fopen($file->getRealPath(), 'r');
-
-    $header = fgetcsv($fileContent, null, ';');
-    $rows = [];
-    while($row = fgetcsv($fileContent, null, ';')) {
-      $rows[] = array_combine($header, $row);
-    }
-
-    foreach($rows as $row) {
-      $tmp = explode('.', $row['name']);
-      $attachment = new Attachment();
-      $attachment->user_id = Auth::user()->id;
-      $attachment->site_id = $siteId;
-      $attachment->name = $row['name'];
-      // if path starts with http, download and move to digitalocean
-      if(Str::startsWith($row['path'], 'http')) {
-        $upload = file_get_contents($row['path']);
-        Storage::disk('local')->put('tmp/'.$row['name'], $upload);
-        $attachment->path = Storage::disk('digitalocean')->putFile($siteId.'/'.Auth::user()->id, new File(Storage::path('tmp/'.$row['name'])), 'public');
-        Storage::disk('local')->delete('tmp/'.$row['name']);
-      } else {
-        $attachment->path = $row['path'];
-      }
-      $attachment->size = $row['size'];
-      $attachment->extension = end($tmp);
-      $attachment->mime_type = $row['mime'];
-      $attachment->save();
-    }
-
-    flash('Attachments imported successfully.')->success();
-    return redirect()->route('sites.attachments.index', $siteId);
-  }
 }
