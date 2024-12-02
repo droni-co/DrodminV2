@@ -38,6 +38,15 @@
             <li><a class="dropdown-item" href="{{ route('sites.enrollments.index', $site)}}">Usuarios</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+            <i class="mdi mdi-storefront-outline"></i>
+            Comercial
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ route('sites.leads.index', $site)}}">Leads</a></li>
+          </ul>
+        </li>
       </ul>
       <form class="d-flex" role="search" action="{{ route('sites.search', $site) }}" method="GET">
         <input
