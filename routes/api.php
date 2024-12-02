@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\SiteController;
 use App\Http\Controllers\Api\SitePostController;
 use App\Http\Controllers\Api\SitePostCommentController;
 use App\Http\Controllers\Api\SiteTopicController;
+use App\Http\Controllers\Api\SiteLeadController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -17,6 +18,7 @@ Route::apiResource('sites', SiteController::class)->only(['index', 'show']);
 Route::apiResource('sites.posts', SitePostController::class)->only(['index', 'show']);
 Route::apiResource('sites.posts.comments', SitePostCommentController::class)->only(['index']);
 Route::apiResource('sites.topics', SiteTopicController::class)->only(['index', 'show']);
+Route::apiResource('sites.leads', SiteLeadController::class)->only(['store']);
 
 route::middleware('auth:sanctum')->group(function() {
   Route::get('/me', [AuthController::class, 'me']);
