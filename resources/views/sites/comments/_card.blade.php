@@ -37,12 +37,9 @@
         </ul>
       </div>
     </div>
-    @if($comment->parent)
-    <div class="text-secondary">
-      <strong>Respuesta a:</strong>
-      <small>{{ $comment->parent->content }}</small>
-    </div>
-    @endif
     <small>{{ $comment->content }}</small>
+    @foreach ($comment->children as $child)
+      @include('sites.comments._card', ['comment' => $child])
+    @endforeach
   </div>
 </div>
