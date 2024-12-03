@@ -33,7 +33,7 @@
             Comunidad
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ route('sites.comments.index', $site)}}">Foros</a></li>
+            <li><a class="dropdown-item" href="{{ route('sites.topics.index', $site)}}">Foros</a></li>
             <li><a class="dropdown-item" href="{{ route('sites.comments.index', $site)}}">Comentarios</a></li>
             <li><a class="dropdown-item" href="{{ route('sites.enrollments.index', $site)}}">Usuarios</a></li>
           </ul>

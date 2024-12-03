@@ -16,7 +16,7 @@ class Topic extends Model
     return $this->belongsTo(User::class);
   }
   /**
-   * Get all of the post's comments.
+   * Get all of the topic's comments.
    */
   public function comments(): MorphMany
   {

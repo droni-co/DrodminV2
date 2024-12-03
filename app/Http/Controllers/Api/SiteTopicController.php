@@ -35,7 +35,9 @@ class SiteTopicController extends Controller
           ->orWhere('content', 'like', '%' . $options['q'] . '%');
       });
     }
-    $topics = $topics->orderBy($options['sortBy'], $options['sortDesc'] == 'true' ? 'desc' : 'asc')
+
+    $topics = $topics->with(['user'])
+      ->orderBy($options['sortBy'], $options['sortDesc'] == 'true' ? 'desc' : 'asc')
       ->paginate($options['itemsPerPage']);
     $topics->data = $topics->makeHidden(['content']);
     return response()->json($topics);
@@ -61,7 +63,7 @@ class SiteTopicController extends Controller
     $topic->slug = $slug;
     $topic->name = $request->name;
     $topic->content = $request->content;
-    $topic->approved_at = now();
+    $topic->group = $request->group;
     $topic->save();
 
     return $topic;
